@@ -1,11 +1,6 @@
 import Discord, { Interaction, GuildMember, Snowflake } from 'discord.js';
 const { commands, ali, imam, asim, prefix, help } = require('../commands.json');
 var { google } = require('googleapis');
-var youtube = google.youtube({
-	version: 'v3',
-	auth: 'AIzaSyBYNGnYzPydEPER_m65UiDXROTYwd2an-c',
-});
-
 import {
 	AudioPlayerStatus,
 	AudioResource,
@@ -15,10 +10,12 @@ import {
 } from '@discordjs/voice';
 import { Track } from './music/track';
 import { MusicSubscription } from './music/subscription';
-
 // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
-const { token } = require('../auth.json');
-
+const { token, key } = require('../auth.json');
+var youtube = google.youtube({
+	version: 'v3',
+	auth: key,
+});
 const subscriptions = new Map<Snowflake, MusicSubscription>();
 const client = new Discord.Client({ intents: ['GUILD_VOICE_STATES', 'GUILD_MESSAGES', 'GUILDS'] });
 function getRandomInt(max: number) {
